@@ -1,15 +1,29 @@
 <template>
   <div id="app">
-    <VideoFrame/>
+    <NavBar :pages="pages" v-model="selectedPage"/>
+    <VideoFrame v-show="selectedPage == 0" :src="src + '/' + selectedVideo"/>
+    <DirectoryBrowse v-show="selectedPage == 1" d:src="src" v-model="selectedVideo"/>
   </div>
 </template>
 
 <script>
 import VideoFrame from "./components/VideoFrame";
+import DirectoryBrowse from "./components/DirectoryBrowse";
+import NavBar from "./components/NavBar";
 export default {
   name: "app",
+  data: function() {
+    return {
+      src: "http://localhost:8081/video",
+      selectedVideo: 1,
+      selectedPage: 0,
+      pages: ["VideoFrame", "DirectoryBrowse"]
+    };
+  },
   components: {
-    VideoFrame
+    NavBar,
+    VideoFrame,
+    DirectoryBrowse
   }
 };
 </script>

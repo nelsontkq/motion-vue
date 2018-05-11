@@ -7,12 +7,13 @@
 <script>
 import myVideo from "vue-video";
 export default {
+  props: ["src"],
   data: function() {
     return {
       video: {
         sources: [
           {
-            src: "http://localhost:8081/video/1",
+            src: this.src,
             type: "video/mp4"
           }
         ],
