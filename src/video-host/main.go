@@ -9,8 +9,10 @@ import (
 	"strconv"
 
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
+// Video struct holding relevant videos
 type Video struct {
 	ID   int    `json:"id,omitempty"`
 	Path string `json:"path,omitempty`
@@ -49,7 +51,7 @@ func DeleteVideo(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func FilePathWalkDir(root string) ([]Video, error) {
+func filePathWalkDir(root string) ([]Video, error) {
 	var videos []Video
 	var i int
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
@@ -57,8 +59,8 @@ func FilePathWalkDir(root string) ([]Video, error) {
 			if info.IsDir() {
 				return nil
 			}
-			videos = append(videos, Video{ID: i, Path: path})
 			i++
+			videos = append(videos, Video{ID: i, Path: path})
 		}
 		return nil
 	})
@@ -72,14 +74,19 @@ func main() {
 		err  error
 	)
 	root = "/home/nelsontk/Documents/dev/motion-vue/motion/"
-	videos, err = FilePathWalkDir(root)
+	videos, err = filePathWalkDir(root)
 	if err != nil {
 		panic(err)
 	}
+	c := cors.New(cors.Options{
+		AllowedOrigins:   []string{"http://localhost:8080"},
+		AllowCredentials: true,
+	})
 
 	router := mux.NewRouter()
 	router.HandleFunc("/video", ListVideos).Methods("GET")
 	router.HandleFunc("/video/{id}", GetVideo).Methods("GET")
 	router.HandleFunc("/video/{id}", DeleteVideo).Methods("DELETE")
-	log.Fatal(http.ListenAndServe(":8081", router))
+	handler := c.Handler(router)
+	log.Fatal(http.ListenAndServe(":3000", handler))
 }

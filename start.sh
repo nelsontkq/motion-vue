@@ -1,10 +1,9 @@
 #!/usr/bin/env bash
-sudo nohup docker run \
-    -v /home/nelsontk/Documents/dev/motion-vue/motion:/srv \
-    -v /etc/config.json:/config.json \
-    -p 80:80 \
-    hacdias/filebrowser &
+cd src/video-host
+go build -o video-server
+./video-server &
 pid=$!
+cd ../../
 
 npm run serve
 kill ${pid}

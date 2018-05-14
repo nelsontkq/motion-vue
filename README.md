@@ -8,4 +8,4 @@ An interface for Motion-Project. Manages the videos created and allows you to wa
 
 ## Run
 
-    ./run-dev.sh
+    ./start.sh

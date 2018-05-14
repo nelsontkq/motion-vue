@@ -2,7 +2,7 @@
   <div id="app">
     <NavBar :pages="pages" v-model="selectedPage"/>
     <VideoFrame v-show="selectedPage == 0" :src="src + '/' + selectedVideo"/>
-    <DirectoryBrowse v-show="selectedPage == 1" d:src="src" v-model="selectedVideo"/>
+    <DirectoryBrowse v-show="selectedPage == 1" :src="src" v-model="selectedVideo"/>
   </div>
 </template>
 
@@ -14,7 +14,7 @@ export default {
   name: "app",
   data: function() {
     return {
-      src: "http://localhost:8081/video",
+      src: "http://localhost:3000/video",
       selectedVideo: 1,
       selectedPage: 0,
       pages: ["VideoFrame", "DirectoryBrowse"]
