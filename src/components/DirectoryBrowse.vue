@@ -3,10 +3,11 @@
   <div>
     <ul>
       <li v-for="item in videos" :key="item.id">
-        <a href="" :value="item.Path" @click.prevent="$emit('input', index)">{{ item.Path}}</a>
-        <button :value="item" v-on:click="deleteItem(item.id)">delete</button>
+        <input type="checkbox" :value="item" :id="item.id" v-model="checkedVideos"> 
+         {{item.Path}}
       </li>
     </ul>
+    <button @click="deleteItems">Delete</button>
   </div>
 </template>
 
@@ -17,7 +18,8 @@ export default {
   props: ["src"],
   data: function() {
     return {
-      videos: []
+      videos: [],
+      checkedVideos: []
     };
   },
   created() {
@@ -27,12 +29,18 @@ export default {
     });
   },
   methods: {
-    deleteItem: function(item) {
-      axios.delete(this.src + "/" + item);
+    deleteItems: function() {
+      for (var i = 0; i < this.checkedVideos.length; i++) {
+        axios.delete(this.src + "/" + this.checkedVideos[i].id, {
+          crossdomain: true
+        });
+        var index = this.videos.indexOf(this.checkedVideos[i]);
+        this.videos.splice(index, 1);
+        this.checkedVideos.splice(i, 1);
+      }
     }
   }
 };
 </script>
 <style lang="less" scoped>
-
 </style>
