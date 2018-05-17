@@ -1,28 +1,26 @@
 <template>
   <div id="app">
     <NavBar :pages="pages" v-model="selectedPage"/>
-    <VideoFrame v-show="selectedPage == 0" :src="src + '/' + selectedVideo"/>
-    <DirectoryBrowse v-show="selectedPage == 1" :src="src" v-model="selectedVideo"/>
+    <LiveStream v-show="selectedPage == 0" :streamSrc="streamSrc" />
+    <DirectoryBrowse v-show="selectedPage == 1" :src="src"/>
   </div>
 </template>
 
 <script>
-import VideoFrame from "./components/VideoFrame";
-import DirectoryBrowse from "./components/DirectoryBrowse";
+import DirectoryBrowse from "./components/VideoSnapIn";
 import NavBar from "./components/NavBar";
 export default {
   name: "app",
   data: function() {
     return {
       src: "http://localhost:3000/video",
-      selectedVideo: 1,
+      streamSrc: "http://localhost:8081",
       selectedPage: 0,
-      pages: ["VideoFrame", "DirectoryBrowse"]
+      pages: ["LiveStream", "VideoSnapIn"]
     };
   },
   components: {
     NavBar,
-    VideoFrame,
     DirectoryBrowse
   }
 };

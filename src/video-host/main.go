@@ -18,7 +18,7 @@ import (
 // Video struct holding relevant videos
 type Video struct {
 	ID   int    `json:"id,omitempty"`
-	Path string `json:"path,omitempty`
+	Name string `json:"path,omitempty`
 }
 
 var videos []Video
@@ -35,7 +35,8 @@ func GetVideo(w http.ResponseWriter, r *http.Request) {
 	for _, item := range videos {
 		var i, _ = strconv.Atoi(params["id"])
 		if item.ID == i {
-			http.ServeFile(w, r, item.Path)
+			fmt.Println("serving " + item.Name)
+			http.ServeFile(w, r, filepath.Join(root, item.Name))
 			return
 		}
 	}
@@ -49,11 +50,10 @@ func DeleteVideo(w http.ResponseWriter, r *http.Request) {
 		var i, _ = strconv.Atoi(params["id"])
 		if item.ID == i {
 			videos = append(videos[:index], videos[index+1:]...)
-			err := os.Rename(path.Join(root, item.Path), path.Join(root, ".trash", item.Path))
+			err := os.Rename(path.Join(root, item.Name), path.Join(root, ".trash", item.Name))
 			if err != nil {
 				panic(err)
 			}
-			fmt.Println("moved file to trash.")
 			break
 		}
 		json.NewEncoder(w).Encode(videos)
@@ -82,7 +82,7 @@ func filePathWalkDir(root string) ([]Video, error) {
 				return filepath.SkipDir
 			}
 			i++
-			videos = append(videos, Video{ID: i, Path: filepath.Base(path)})
+			videos = append(videos, Video{ID: i, Name: filepath.Base(path)})
 		}
 		return nil
 	})
