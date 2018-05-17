@@ -143,3 +143,5 @@ typings/
 ./node_modules/regjsparser/node_modules/.bin/jsesc
 ./node_modules/caniuse-api/node_modules/.bin/browserslist
 ./motion
+./dist
+./public
