@@ -18,11 +18,11 @@ import (
 // Video struct holding relevant videos
 type Video struct {
 	ID   int    `json:"id,omitempty"`
-	Name string `json:"path,omitempty`
+	Name string `json:"name,omitempty"`
 }
 
 var videos []Video
-var root = "/home/nelsontk/Documents/dev/motion-vue/motion/"
+var root string
 
 // ListVideos returns the video array
 func ListVideos(w http.ResponseWriter, r *http.Request) {
@@ -117,31 +117,35 @@ func heartBeat(root string) {
 
 // our main function
 func main() {
-	var (
-		err         error
-		pathErr     error
-		trashExists bool
-	)
-	var trashDir = path.Join(root, ".trash")
+	ex, err := os.Executable()
+	if err != nil {
+		panic(err)
+	}
+	root, err = filepath.EvalSymlinks(filepath.Join(filepath.Dir(ex), "motion"))
+	if err != nil {
+		panic(err)
+	}
+	trashDir := path.Join(root, ".trash")
+	fmt.Println("root " + root)
 	videos, err = filePathWalkDir(root)
 	if err != nil {
 		panic(err)
 	}
-	trashExists, pathErr = exists(trashDir)
-	if pathErr != nil {
-		panic(pathErr)
+	fmt.Println("videos found: ", videos)
+	trashExists, err := exists(trashDir)
+	if err != nil {
+		panic(err)
 	}
 	if !trashExists {
 		os.Mkdir(trashDir, os.ModePerm)
 	}
-	go heartBeat(trashDir)
 
+	go heartBeat(trashDir)
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:8080"},
 		AllowedMethods:   []string{"GET", "DELETE"},
 		AllowCredentials: true,
 	})
-
 	router := mux.NewRouter()
 	router.HandleFunc("/video", ListVideos).Methods("GET")
 	router.HandleFunc("/video/{id}", GetVideo).Methods("GET")

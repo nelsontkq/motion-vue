@@ -4,7 +4,7 @@
     <ul>
       <li v-for="item in videos" :key="item.id">
         <input type="checkbox" :value="item" :id="item.id" v-model="checkedVideos"> 
-         <a href="" @click.prevent="changeVideo(item.id)">{{ item.Name }}</a>
+         <a href="" @click.prevent="changeVideo(item.id)">{{ item.name }}</a>
       </li>
     </ul>
     <button @click="deleteItems">Delete</button>

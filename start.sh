@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 cd src/video-host
 go build -o video-server
+if [ -d $PWD/motion ]; then 
+  echo 'motion symlink found.';
+else 
+  ln -s ~/Documents/motion/ $PWD/motion
+fi
 ./video-server &
 pid=$!
 cd ../../
