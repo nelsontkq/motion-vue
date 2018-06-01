@@ -107,11 +107,15 @@ func removeContents(dir string) error {
 	}
 	return nil
 }
-
-func heartBeat(root string) {
+func dailyCleanUp(root string) {
 	for range time.Tick(time.Hour * 24) {
-		fmt.Println("Clearing trash...")
 		removeContents(root)
+	}
+}
+
+func folderWatch(ms int64) {
+	for range time.Tick(time.Duration(ms) * time.Millisecond) {
+		fmt.Println("Scanning for new files...")
 	}
 }
 
@@ -139,8 +143,9 @@ func main() {
 	if !trashExists {
 		os.Mkdir(trashDir, os.ModePerm)
 	}
+	go folderWatch(1000) // ms
+	go dailyCleanUp(trashDir)
 
-	go heartBeat(trashDir)
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:8080"},
 		AllowedMethods:   []string{"GET", "DELETE"},

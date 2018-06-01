@@ -1,27 +1,29 @@
 <template>
   <div id="app">
-    <NavBar :pages="pages" v-model="selectedPage"/>
-    <LiveStream v-show="selectedPage == 0" :streamSrc="streamSrc" />
-    <DirectoryBrowse v-show="selectedPage == 1" :src="src"/>
+      <top-nav :pages="pages" v-model="selectedPage"/>
+    <live-stream v-show="selectedPage == pages[0]" :streamSrc="streamSrc" />
+    <video-snap v-show="selectedPage == pages[1]" :src="src"/>
   </div>
 </template>
 
 <script>
-import DirectoryBrowse from "./components/VideoSnapIn";
+import VideoSnapIn from "./components/VideoSnapIn";
 import NavBar from "./components/NavBar";
+import LiveStream from "./components/LiveStream";
 export default {
   name: "app",
   data: function() {
     return {
       src: "http://localhost:3000/video",
       streamSrc: "http://localhost:8081",
-      selectedPage: 0,
+      selectedPage: "LiveStream",
       pages: ["LiveStream", "VideoSnapIn"]
     };
   },
   components: {
-    NavBar,
-    DirectoryBrowse
+    "top-nav": NavBar,
+    "video-snap": VideoSnapIn,
+    "live-stream": LiveStream
   }
 };
 </script>
