@@ -11,6 +11,7 @@ import (
 	"strconv"
 	"time"
 
+	"github.com/go-fsnotify/fsnotify"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 )
@@ -113,12 +114,6 @@ func dailyCleanUp(root string) {
 	}
 }
 
-func folderWatch(ms int64) {
-	for range time.Tick(time.Duration(ms) * time.Millisecond) {
-		fmt.Println("Scanning for new files...")
-	}
-}
-
 // our main function
 func main() {
 	ex, err := os.Executable()
@@ -143,8 +138,12 @@ func main() {
 	if !trashExists {
 		os.Mkdir(trashDir, os.ModePerm)
 	}
-	go folderWatch(1000) // ms
-	go dailyCleanUp(trashDir)
+	cleanupTask := func() { go dailyCleanUp(trashDir) }
+	watcher, err := fsnotify.NewWatcher()
+	if err != nil {
+		panic(err)
+	}
+	defer watcher.Close()
 
 	c := cors.New(cors.Options{
 		AllowedOrigins:   []string{"http://localhost:8080"},
