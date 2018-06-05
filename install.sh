@@ -25,15 +25,8 @@ do
     esac
 done
 # Possibly unnecessary future-proofing.
-unset NAME
-unset VERSION
-unset ID
-unset VERSION_ID
-unset PRETTY_NAME
-unset ANSI_COLOR
-unset HOME_URL
-unset SUPPORT_URL
-unset BUG_REPORT_URL
+unset NAME VERSION ID VERSION_ID PRETTY_NAME ANSI_COLOR HOME_URL SUPPORT_URL  \
+BUG_REPORT_URL
 ###############################################################################
 
 ################################ Check for root ###############################
@@ -86,6 +79,9 @@ else
     exit 1
   fi
 fi
+cd src
+npm install
+cd ..
 ###############################################################################
 echo Install complete.
 exit 0
