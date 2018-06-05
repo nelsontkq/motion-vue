@@ -59,6 +59,7 @@ fi
 ###############################################################################
 
 ######################### Install and config backend ##########################
+>>>>>>> 69105b518799f5c341fd0ee0c61c5ac9fde99fd1
 go get "github.com/gorilla/mux"
 go get "github.com/rs/cors"
 cd src/video-host
