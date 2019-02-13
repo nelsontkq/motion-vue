@@ -1,0 +1,14 @@
+/home/nelson/dev/motion-vue/src/server/bin/Debug/netcoreapp2.2/server.deps.json
+/home/nelson/dev/motion-vue/src/server/bin/Debug/netcoreapp2.2/server.runtimeconfig.json
+/home/nelson/dev/motion-vue/src/server/bin/Debug/netcoreapp2.2/server.runtimeconfig.dev.json
+/home/nelson/dev/motion-vue/src/server/bin/Debug/netcoreapp2.2/server.dll
+/home/nelson/dev/motion-vue/src/server/bin/Debug/netcoreapp2.2/server.pdb
+/home/nelson/dev/motion-vue/src/server/obj/Debug/netcoreapp2.2/server.csprojAssemblyReference.cache
+/home/nelson/dev/motion-vue/src/server/obj/Debug/netcoreapp2.2/server.csproj.CoreCompileInputs.cache
+/home/nelson/dev/motion-vue/src/server/obj/Debug/netcoreapp2.2/server.RazorAssemblyInfo.cache
+/home/nelson/dev/motion-vue/src/server/obj/Debug/netcoreapp2.2/server.RazorAssemblyInfo.cs
+/home/nelson/dev/motion-vue/src/server/obj/Debug/netcoreapp2.2/server.AssemblyInfoInputs.cache
+/home/nelson/dev/motion-vue/src/server/obj/Debug/netcoreapp2.2/server.AssemblyInfo.cs
+/home/nelson/dev/motion-vue/src/server/obj/Debug/netcoreapp2.2/server.RazorTargetAssemblyInfo.cache
+/home/nelson/dev/motion-vue/src/server/obj/Debug/netcoreapp2.2/server.dll
+/home/nelson/dev/motion-vue/src/server/obj/Debug/netcoreapp2.2/server.pdb
