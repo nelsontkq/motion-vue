@@ -1,5 +1,7 @@
 # custom
 .vscode/
+bin/
+obj/
 
 # Logs
 logs
