@@ -6,20 +6,29 @@ namespace Server.Controllers
 {
     public class VideosController : Controller
     {
-        public VideosController(VideoRetriever retriever)
-        {
+        private VideoService _service;
 
+        public VideosController(VideoService service)
+        {
+            _service = service;
         }
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            return Ok();
+            return Ok(await _service.GetAll());
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
         {
-            return Ok();
+            return Ok(await _service.GetById(id));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            if (await _service.DeleteById(id)) return Ok();
+            else return NotFound();
         }
     }
 }

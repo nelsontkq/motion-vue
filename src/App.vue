@@ -14,7 +14,7 @@ export default {
   name: "app",
   data: function() {
     return {
-      src: "http://localhost:3000/video",
+      src: "http://localhost:5000/videos",
       streamSrc: "http://localhost:8081",
       selectedPage: "LiveStream",
       pages: ["LiveStream", "VideoSnapIn"]
