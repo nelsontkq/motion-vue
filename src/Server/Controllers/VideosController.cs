@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Server.Util;
 namespace Server.Controllers
 {
+    [Route("api/videos")]
     public class VideosController : Controller
     {
         private VideoService _service;
